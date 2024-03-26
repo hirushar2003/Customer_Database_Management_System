@@ -36,10 +36,13 @@ public class RegisterFormController {
         String userName = txtUserNameReg.getText();
         String password = txtPasswordReg.getText();
 
-        UserJDBC.saveUser(name, address, contact, email, userName, password);
+        if (txtName.getText().isEmpty() || txtAddress.getText().isEmpty() || txtContact.getText().isEmpty() || txtEmail.getText().isEmpty() || txtUserNameReg.getText().isEmpty() || txtPasswordReg.getText().isEmpty()){
+            new Alert(Alert.AlertType.ERROR,"Fill all details").show();
+        } else {
+            UserJDBC.saveUser(name, address, contact, email, userName, password);
 
-        new Alert(Alert.AlertType.CONFIRMATION, "Successfully Registerd").show();
-
+            new Alert(Alert.AlertType.CONFIRMATION, "Successfully Registerd").show();
+        }
     }
 
     public void loginBtnNavigateOnAction(MouseEvent mouseEvent) throws IOException {

@@ -39,7 +39,11 @@ public class LoginFormController {
                 Scene scene = new Scene(rootNode);
                 Stage stage = (Stage) loginAp.getScene().getWindow();
                 stage.setScene(scene);
+            } else {
+                new Alert(Alert.AlertType.ERROR,"Invalid User Name or Password").show();
             }
+            txtUserName.clear();
+            txtPassword.clear();
         }
     }
 
