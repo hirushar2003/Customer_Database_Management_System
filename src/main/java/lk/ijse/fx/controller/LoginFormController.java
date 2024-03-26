@@ -37,6 +37,7 @@ public class LoginFormController {
                 Scene scene = new Scene(rootNode);
                 Stage stage = (Stage) loginAp.getScene().getWindow();
                 stage.setScene(scene);
+                stage.setTitle("Main Window");
             } else {
                 new Alert(Alert.AlertType.ERROR,"Invalid User Name or Password").show();
             }
