@@ -12,42 +12,34 @@ import javafx.stage.Stage;
 import lk.ijse.db.controller.Credential;
 
 import java.io.IOException;
+import java.sql.*;
 
 public class LoginFormController {
 
     public TextField txtUserName;
     public TextField txtPassword;
     public AnchorPane loginAp;
+    public void btnLoginOnAction() throws SQLException, IOException {
 
-    /*public void btnLoginOnAction(ActionEvent actionEvent) throws IOException {
-        String un = "User";
-        String pa = "1111";
+        String sql = "SELECT * FROM user" ;
 
-        if (un.equals(txtUserName.getText())&& pa.equals(txtPassword.getText())){
-            Parent mainRoot = FXMLLoader.load(getClass().getResource("/view/main_page.fxml"));
-            Stage stage = new Stage();
-            Scene scene = new Scene(mainRoot);
-            stage.setScene(scene);
-            stage.setTitle("Main Frame");
-            stage.show();
+        Connection connection = DriverManager.getConnection(
+                "jdbc:mysql://localhost:3306/kade",
+                "root",
+                "1234");
+        PreparedStatement preparedStatement = connection.prepareStatement(sql);
+        ResultSet resultSet = preparedStatement.executeQuery();
 
-        } else {
-            System.out.println("no");
-        }
-    }*/
-    public void btnLoginOnAction() throws IOException {
-        String username = txtUserName.getText();
-        String password = txtPassword.getText();
+        while (resultSet.next()){
+            String un = resultSet.getString("userName");
+            String p = resultSet.getString("password");
 
-        if (username.equals(Credential.userName) && password.equals(Credential.password)){
-            Parent rootNode = FXMLLoader.load(this.getClass().getResource("/view/main_page.fxml"));
-
-            Scene scene = new Scene(rootNode);
-            Stage stage = (Stage) this.loginAp.getScene().getWindow();
-            stage.setScene(scene);
-            stage.setTitle("Main page");
-        } else {
-            new Alert(Alert.AlertType.ERROR, "Login Failed").show();
+            if (un.equals(txtUserName.getText()) && p.equals(txtPassword.getText())){
+                Parent rootNode = FXMLLoader.load(getClass().getResource("/view/main_page.fxml"));
+                Scene scene = new Scene(rootNode);
+                Stage stage = (Stage) loginAp.getScene().getWindow();
+                stage.setScene(scene);
+            }
         }
     }
 
